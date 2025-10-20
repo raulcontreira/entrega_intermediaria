@@ -1,0 +1,12 @@
+services:
+  e2e:
+    build: .
+    image: bootcamp/ext-e2e:latest
+    environment:
+      - CI=true
+    volumes:
+      - ./:/app
+    working_dir: /app
+    command: npm run test:e2e
+    shm_size: 2gb
+

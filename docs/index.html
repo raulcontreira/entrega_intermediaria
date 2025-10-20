@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bootcamp Helper — Extensão MV3</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #007bff;
+      --secondary-color: #6c757d;
+      --success-color: #28a745;
+      --warning-color: #ffc107;
+      --danger-color: #dc3545;
+      --dark-color: #343a40;
+      --light-color: #f8f9fa;
+    }
+    
+    body { 
+      padding-top: 2rem; 
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    .container { 
+      max-width: 900px; 
+    }
+    
+    .hero-section {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 3rem 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(0, 123, 255, 0.1), transparent);
+      animation: shimmer 3s infinite;
+    }
+    
+    @keyframes shimmer {
+      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    }
+    
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+    
+    .hero-title {
+      font-size: 3.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+    }
+    
+    .hero-subtitle {
+      font-size: 1.25rem;
+      color: var(--secondary-color);
+      margin-bottom: 2rem;
+    }
+    
+    .feature-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border: none;
+      border-radius: 15px;
+      margin-bottom: 1.5rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+    
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+    }
+    
+    .card-header {
+      background: transparent;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      font-weight: 600;
+      font-size: 1.1rem;
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    
+    .card-body {
+      padding: 1.5rem;
+    }
+    
+    .icon-badge {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: white;
+    }
+    
+    .icon-install { background: linear-gradient(135deg, #28a745, #20c997); }
+    .icon-permissions { background: linear-gradient(135deg, #ffc107, #fd7e14); }
+    .icon-test { background: linear-gradient(135deg, #17a2b8, #007bff); }
+    .icon-repo { background: linear-gradient(135deg, #6f42c1, #e83e8c); }
+    .icon-criteria { background: linear-gradient(135deg, #28a745, #20c997); }
+    
+    .code-snippet {
+      background: #2d3748;
+      color: #e2e8f0;
+      padding: 1rem;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      margin: 0.5rem 0;
+      border-left: 4px solid var(--primary-color);
+    }
+    
+    .step-list {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .step-list li {
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .step-list li:last-child {
+      border-bottom: none;
+    }
+    
+    .step-number {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+    
+    .download-section {
+      background: linear-gradient(135deg, var(--success-color), #20c997);
+      color: white;
+      padding: 2rem;
+      border-radius: 15px;
+      text-align: center;
+      margin-top: 2rem;
+    }
+    
+    .download-btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+    }
+    
+    .download-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      border-color: rgba(255, 255, 255, 0.5);
+      color: white;
+      transform: translateY(-2px);
+    }
+    
+    .tech-badge {
+      display: inline-block;
+      background: rgba(0, 123, 255, 0.1);
+      color: var(--primary-color);
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin: 0.25rem;
+    }
+    
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 2.5rem;
+      }
+      
+      .hero-section {
+        padding: 2rem 1rem;
+      }
+      
+      .card-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero-section">
+      <div class="hero-content">
+        <h1 class="hero-title">
+          <i class="fas fa-puzzle-piece me-3"></i>
+          Bootcamp Helper
+        </h1>
+        <p class="hero-subtitle">
+          Extensão para Chrome (Manifest V3) — projeto do Bootcamp II
+        </p>
+        <div class="mt-4">
+          <span class="tech-badge">Manifest V3</span>
+          <span class="tech-badge">Chrome Extension</span>
+          <span class="tech-badge">JavaScript</span>
+          <span class="tech-badge">Bootstrap</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="feature-card">
+      <div class="card-header">
+        <div class="icon-badge icon-install">
+          <i class="fas fa-download"></i>
+        </div>
+        Instalação manual (modo desenvolvedor)
+      </div>
+      <div class="card-body">
+        <ol class="step-list">
+          <li>
+            <div class="step-number">1</div>
+            <div>
+              Acesse <code class="code-snippet">chrome://extensions</code> no seu navegador Chrome
+            </div>
+          </li>
+          <li>
+            <div class="step-number">2</div>
+            <div>Ative o <strong>Developer mode</strong> no canto superior direito</div>
+          </li>
+          <li>
+            <div class="step-number">3</div>
+            <div>Clique em <strong>Load unpacked</strong> e selecione a pasta do projeto</div>
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="feature-card">
+      <div class="card-header">
+        <div class="icon-badge icon-permissions">
+          <i class="fas fa-shield-alt"></i>
+        </div>
+        Permissões
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="d-flex align-items-center mb-2">
+              <i class="fas fa-database text-primary me-2"></i>
+              <code>storage</code> - Armazenamento local
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="d-flex align-items-center mb-2">
+              <i class="fas fa-window-maximize text-primary me-2"></i>
+              <code>tabs</code> - Acesso às abas
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="feature-card">
+      <div class="card-header">
+        <div class="icon-badge icon-test">
+          <i class="fas fa-flask"></i>
+        </div>
+        🧪 Teste Local e Instalação
+      </div>
+      <div class="card-body">
+        <ol class="step-list">
+          <li>
+            <div class="step-number">1</div>
+            <div>Acesse <code class="code-snippet">chrome://extensions</code> e ative <strong>Developer mode</strong></div>
+          </li>
+          <li>
+            <div class="step-number">2</div>
+            <div>Clique em <strong>Load unpacked</strong> e selecione a pasta da extensão</div>
+          </li>
+          <li>
+            <div class="step-number">3</div>
+            <div>Abra o popup pelo ícone da extensão; verifique o console (F12)</div>
+          </li>
+          <li>
+            <div class="step-number">4</div>
+            <div>Teste o content script nas URLs listadas em <code>matches</code></div>
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="feature-card">
+      <div class="card-header">
+        <div class="icon-badge icon-repo">
+          <i class="fab fa-github"></i>
+        </div>
+        📁 Padrão de Repositório
+      </div>
+      <div class="card-body">
+        <ul class="step-list">
+          <li>
+            <div class="step-number">
+              <i class="fas fa-tag"></i>
+            </div>
+            <div>Nome do repositório no formato: <code class="code-snippet">bootcamp2-chrome-ext-&lt;seu-usuario&gt;</code></div>
+          </li>
+          <li>
+            <div class="step-number">
+              <i class="fas fa-code-branch"></i>
+            </div>
+            <div>Branch principal: <code class="code-snippet">main</code>. Use PRs para evoluções futuras</div>
+          </li>
+          <li>
+            <div class="step-number">
+              <i class="fas fa-file-alt"></i>
+            </div>
+            <div>Adicione <code class="code-snippet">.gitignore</code> (ex.: <code>**/.DS_Store</code>, <code>**/node_modules</code>)</div>
+          </li>
+          <li>
+            <div class="step-number">
+              <i class="fas fa-balance-scale"></i>
+            </div>
+            <div>Licença recomendada: MIT (ou outra, mas declare no <code>LICENSE</code>)</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="feature-card">
+      <div class="card-header">
+        <div class="icon-badge icon-criteria">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        ✅ Critérios de Avaliação
+      </div>
+      <div class="card-body">
+        <ul class="step-list">
+          <li>
+            <div class="step-number">
+              <i class="fas fa-cogs"></i>
+            </div>
+            <div>Funcionalidade mínima entregue (popup + background; opcional content script)</div>
+          </li>
+          <li>
+            <div class="step-number">
+              <i class="fas fa-file-code"></i>
+            </div>
+            <div>Manifest V3 correto; permissões mínimas; ícones adequados</div>
+          </li>
+          <li>
+            <div class="step-number">
+              <i class="fas fa-code"></i>
+            </div>
+            <div>Código organizado, comentários essenciais e README claro</div>
+          </li>
+          <li>
+            <div class="step-number">
+              <i class="fas fa-globe"></i>
+            </div>
+            <div>GitHub Pages publicado e navegável; link para download</div>
+          </li>
+          <li>
+            <div class="step-number">
+              <i class="fas fa-history"></i>
+            </div>
+            <div>Commits frequentes e mensagens descritivas</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="download-section">
+      <h3 class="mb-3">
+        <i class="fas fa-download me-2"></i>
+        Pronto para começar?
+      </h3>
+      <p class="mb-4">Baixe a extensão e comece a desenvolver!</p>
+      <a href="./bootcamp-helper-extension.zip" class="download-btn">
+        <i class="fas fa-download"></i>
+        Download da Extensão
+      </a>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+  
+  <script>
+    // Adiciona animações suaves aos elementos
+    document.addEventListener('DOMContentLoaded', function() {
+      const cards = document.querySelectorAll('.feature-card');
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      });
+      
+      cards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
+        observer.observe(card);
+      });
+    });
+  </script>
+</body>
+</html>
+
